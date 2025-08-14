@@ -4,600 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SecureQA | Continuous Quality & Security Checker</title>
-    <style>
-        /* Global Styles */
-        :root {
-            --primary: #2a3f8f;
-            --secondary: #4a6bff;
-            --accent: #ff6b6b;
-            --dark: #1a1a2e;
-            --light: #f8f9fa;
-            --success: #28a745;
-            --warning: #ffc107;
-            --danger: #dc3545;
-            --gray: #6c757d;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
-        }
-        
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            background-color: var(--primary);
-            color: white;
-            border-radius: 4px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn:hover {
-            background-color: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-        }
-        
-        .btn-outline:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        section {
-            padding: 80px 0;
-        }
-        
-        h1, h2, h3, h4 {
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-        
-        h1 {
-            font-size: 3rem;
-        }
-        
-        h2 {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 50px;
-            position: relative;
-        }
-        
-        h2::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background-color: var(--accent);
-            margin: 15px auto;
-        }
-        
-        p {
-            margin-bottom: 15px;
-        }
-        
-        /* Header & Navigation */
-        header {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-        
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-        
-        .logo span {
-            color: var(--accent);
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
-        .nav-links a {
-            font-weight: 600;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--dark);
-        }
-        
-        /* Hero Section */
-        #hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(135deg, rgba(42, 63, 143, 0.9), rgba(74, 107, 255, 0.8)), url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
-            color: white;
-            text-align: center;
-            padding-top: 80px;
-        }
-        
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .hero-content h1 {
-            margin-bottom: 20px;
-            font-size: 3.5rem;
-        }
-        
-        .hero-content p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-        
-        .hero-btns {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-        
-        .hero-btns .btn {
-            background-color: var(--accent);
-        }
-        
-        .hero-btns .btn:hover {
-            background-color: #ff5252;
-        }
-        
-        .hero-btns .btn-outline {
-            border-color: white;
-            color: white;
-        }
-        
-        .hero-btns .btn-outline:hover {
-            background-color: white;
-            color: var(--primary);
-        }
-        
-        /* Features Section */
-        #features {
-            background-color: white;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .feature-card {
-            background-color: var(--light);
-            border-radius: 8px;
-            padding: 30px;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-icon {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-        
-        .feature-card h3 {
-            font-size: 1.5rem;
-        }
-        
-        /* How It Works Section */
-        #how-it-works {
-            background-color: #f1f3ff;
-        }
-        
-        .steps {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .step {
-            display: flex;
-            gap: 20px;
-        }
-        
-        .step-number {
-            background-color: var(--primary);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-        
-        .step-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            flex-grow: 1;
-        }
-        
-        .step-content h3 {
-            color: var(--primary);
-        }
-        
-        /* Pricing Section */
-        #pricing {
-            background-color: white;
-        }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .pricing-card {
-            background-color: var(--light);
-            border-radius: 8px;
-            padding: 30px;
-            text-align: center;
-            transition: transform 0.3s ease;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        .pricing-card.featured {
-            border: 2px solid var(--primary);
-            position: relative;
-            transform: scale(1.05);
-        }
-        
-        .pricing-card.featured::before {
-            content: 'Most Popular';
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--primary);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-        
-        .pricing-card h3 {
-            font-size: 1.5rem;
-            color: var(--primary);
-        }
-        
-        .price {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin: 20px 0;
-            color: var(--dark);
-        }
-        
-        .price span {
-            font-size: 1rem;
-            color: var(--gray);
-        }
-        
-        .pricing-features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-        
-        .pricing-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Testimonials Section */
-        #testimonials {
-            background-color: #f1f3ff;
-        }
-        
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .testimonial-card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        .testimonial-content {
-            font-style: italic;
-            margin-bottom: 20px;
-        }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-        }
-        
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--light);
-            margin-right: 15px;
-            overflow: hidden;
-        }
-        
-        .author-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .author-info h4 {
-            margin-bottom: 5px;
-            font-size: 1rem;
-        }
-        
-        .author-info p {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-        
-        /* Contact Section */
-        #contact {
-            background-color: white;
-        }
-        
-        .contact-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 50px;
-        }
-        
-        .contact-info h3 {
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-        
-        .contact-details {
-            margin-bottom: 30px;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .contact-icon {
-            width: 40px;
-            height: 40px;
-            background-color: var(--light);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            color: var(--primary);
-        }
-        
-        .contact-form .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .contact-form label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-        
-        .contact-form input,
-        .contact-form textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-        
-        .contact-form textarea {
-            height: 150px;
-            resize: vertical;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 50px 0 20px;
-        }
-        
-        .footer-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-        
-        .footer-col h3 {
-            color: white;
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-links a {
-            transition: color 0.3s ease;
-        }
-        
-        .footer-links a:hover {
-            color: var(--accent);
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            transition: background-color 0.3s ease;
-        }
-        
-        .social-links a:hover {
-            background-color: var(--accent);
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            h2 {
-                font-size: 2rem;
-            }
-            
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 80px);
-                background-color: white;
-                flex-direction: column;
-                align-items: center;
-                padding-top: 40px;
-                transition: left 0.3s ease;
-            }
-            
-            .nav-links.active {
-                left: 0;
-            }
-            
-            .nav-links li {
-                margin: 15px 0;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .hero-btns {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .step {
-                flex-direction: column;
-            }
-            
-            .step-number {
-                margin-bottom: 15px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -625,11 +32,11 @@
     <section id="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>Quality & Security on Autopilot</h1>
-                <p>Continuous automated testing and security scanning for your web applications. Get weekly reports with actionable insights to keep your app bug-free and secure.</p>
+                <h1>AI-Powered Quality & Security</h1>
+                <p>Our intelligent system combines automated testing with AI analysis to predict risks, generate tests, and prioritize fixes - keeping your app secure and bug-free with minimal effort.</p>
                 <div class="hero-btns">
                     <a href="#contact" class="btn">Get Started</a>
-                    <a href="#how-it-works" class="btn btn-outline">Learn More</a>
+                    <a href="#how-it-works" class="btn btn-outline">See AI in Action</a>
                 </div>
             </div>
         </div>
@@ -638,28 +45,49 @@
     <!-- Features Section -->
     <section id="features">
         <div class="container">
-            <h2>Why Choose SecureQA?</h2>
+            <h2>AI-Enhanced Protection</h2>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
+                        <i class="fas fa-robot"></i>
                     </div>
-                    <h3>Automated Security</h3>
-                    <p>Continuous vulnerability scanning with OWASP ZAP and Nuclei to detect security risks before they become problems.</p>
+                    <h3>AI Test Generation</h3>
+                    <p>Our AI analyzes your app descriptions and change logs to automatically suggest and generate relevant test cases, keeping your coverage comprehensive as your app evolves.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-bug"></i>
                     </div>
-                    <h3>Quality Assurance</h3>
-                    <p>Comprehensive regression testing with Playwright/Selenium to ensure new updates don't break existing functionality.</p>
+                    <h3>Smart Bug Analysis</h3>
+                    <p>Discovered issues are automatically classified by severity and potential impact using machine learning, so you know what to fix first.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>AI Security Insights</h3>
+                    <p>Vulnerability scans come with plain-English explanations and AI-recommended fixes tailored to your specific codebase and architecture.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>Change Impact Prediction</h3>
+                    <p>Our AI models predict which parts of your application are most likely to break after updates, optimizing your test coverage.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3>Weekly Reports</h3>
-                    <p>Clear, actionable reports delivered straight to your inbox with prioritized fixes and recommendations.</p>
+                    <h3>Automated Regression</h3>
+                    <p>Traditional test automation powered by Playwright/Selenium with AI-driven optimization of test execution order.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Smart Reporting</h3>
+                    <p>AI-generated executive summaries highlight key risks and progress metrics tailored to different stakeholders.</p>
                 </div>
             </div>
         </div>
@@ -668,27 +96,34 @@
     <!-- How It Works Section -->
     <section id="how-it-works">
         <div class="container">
-            <h2>How It Works</h2>
+            <h2>How Our AI Solution Works</h2>
             <div class="steps">
                 <div class="step">
                     <div class="step-number">1</div>
                     <div class="step-content">
-                        <h3>Integration</h3>
-                        <p>We integrate with your CI/CD pipeline or staging environment. Our system connects with Playwright/Selenium for testing and OWASP ZAP/Nuclei for security scanning.</p>
+                        <h3>Intelligent Onboarding</h3>
+                        <p>Our AI analyzes your application structure, past issues, and documentation to build an initial risk profile and generate baseline test cases.</p>
                     </div>
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
                     <div class="step-content">
-                        <h3>Automated Scanning</h3>
-                        <p>Our system runs automated tests and security scans on a schedule you define (daily, weekly, or on every deployment).</p>
+                        <h3>Continuous Learning</h3>
+                        <p>With each scan, our machine learning models improve their understanding of your application's unique patterns and vulnerabilities.</p>
                     </div>
                 </div>
                 <div class="step">
                     <div class="step-number">3</div>
                     <div class="step-content">
-                        <h3>Results & Reporting</h3>
-                        <p>You receive a comprehensive dashboard and weekly email report with test results, security findings, and prioritized action items.</p>
+                        <h3>Predictive Protection</h3>
+                        <p>The system anticipates risks before they occur by analyzing code changes and historical data, focusing testing where it matters most.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Actionable Intelligence</h3>
+                        <p>You receive prioritized recommendations with context-aware fixes and automatically updated test suites.</p>
                     </div>
                 </div>
             </div>
@@ -803,7 +238,7 @@
                             <div class="contact-icon">
                                 <i class="fas fa-envelope"></i>
                             </div>
-                            <p>contact@SecureQA.io</p>
+                            <p>rayen.enaate@gmail.com</p>
                         </div>
                         <div class="contact-item">
                             <div class="contact-icon">
@@ -878,67 +313,6 @@
         </div>
     </footer>
 
-    <script>
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
-        
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ? 
-                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-        });
-        
-        // Smooth Scrolling for Navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                if (navLinks.classList.contains('active')) {
-                    navLinks.classList.remove('active');
-                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                }
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // Form Submission
-        const contactForm = document.getElementById('contactForm');
-        
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            
-            // Here you would typically send this data to a server
-            // For now, we'll just log it and show an alert
-            console.log({ name, email, message });
-            
-            alert('Thank you for your message! We will get back to you soon.');
-            contactForm.reset();
-        });
-        
-        // Sticky Header on Scroll
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
-            } else {
-                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
